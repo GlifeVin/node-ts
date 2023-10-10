@@ -1,6 +1,4 @@
-"use strict";
-
-const DbMixin = require("../mixins/db.mixin");
+const DbMixin = require("../mixins/db.mixin")
 
 /**
  * @typedef {import('moleculer').ServiceSchema} ServiceSchema Moleculer's Service Schema
@@ -22,18 +20,13 @@ module.exports = {
 	 */
 	settings: {
 		// Available fields in the responses
-		fields: [
-			"_id",
-			"name",
-			"quantity",
-			"price"
-		],
+		fields: ["_id", "name", "quantity", "price"],
 
 		// Validator for the `create` & `insert` actions.
 		entityValidator: {
 			name: "string|min:3",
-			price: "number|positive"
-		}
+			price: "number|positive",
+		},
 	},
 
 	/**
@@ -48,9 +41,9 @@ module.exports = {
 			 * @param {Context} ctx
 			 */
 			create(ctx) {
-				ctx.params.quantity = 0;
-			}
-		}
+				ctx.params.quantity = 0
+			},
+		},
 	},
 
 	/**
@@ -77,16 +70,18 @@ module.exports = {
 			rest: "PUT /:id/quantity/increase",
 			params: {
 				id: "string",
-				value: "number|integer|positive"
+				value: "number|integer|positive",
 			},
 			/** @param {Context} ctx */
 			async handler(ctx) {
-				const doc = await this.adapter.updateById(ctx.params.id, { $inc: { quantity: ctx.params.value } });
-				const json = await this.transformDocuments(ctx, ctx.params, doc);
-				await this.entityChanged("updated", json, ctx);
+				const doc = await this.adapter.updateById(ctx.params.id, {
+					$inc: { quantity: ctx.params.value },
+				})
+				const json = await this.transformDocuments(ctx, ctx.params, doc)
+				await this.entityChanged("updated", json, ctx)
 
-				return json;
-			}
+				return json
+			},
 		},
 
 		/**
@@ -96,17 +91,19 @@ module.exports = {
 			rest: "PUT /:id/quantity/decrease",
 			params: {
 				id: "string",
-				value: "number|integer|positive"
+				value: "number|integer|positive",
 			},
 			/** @param {Context} ctx  */
 			async handler(ctx) {
-				const doc = await this.adapter.updateById(ctx.params.id, { $inc: { quantity: -ctx.params.value } });
-				const json = await this.transformDocuments(ctx, ctx.params, doc);
-				await this.entityChanged("updated", json, ctx);
+				const doc = await this.adapter.updateById(ctx.params.id, {
+					$inc: { quantity: -ctx.params.value },
+				})
+				const json = await this.transformDocuments(ctx, ctx.params, doc)
+				await this.entityChanged("updated", json, ctx)
 
-				return json;
-			}
-		}
+				return json
+			},
+		},
 	},
 
 	/**
@@ -123,8 +120,8 @@ module.exports = {
 				{ name: "Samsung Galaxy S10 Plus", quantity: 10, price: 704 },
 				{ name: "iPhone 11 Pro", quantity: 25, price: 999 },
 				{ name: "Huawei P30 Pro", quantity: 15, price: 679 },
-			]);
-		}
+			])
+		},
 	},
 
 	/**
@@ -132,5 +129,5 @@ module.exports = {
 	 */
 	async afterConnected() {
 		// await this.adapter.collection.createIndex({ name: 1 });
-	}
-};
+	},
+}
