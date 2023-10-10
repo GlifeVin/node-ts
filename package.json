@@ -11,7 +11,7 @@
 		"dev": "pnpm /dev:.*/",
 		"dev:build": "esbuild ./src/**/* --bundle --outdir=dist --packages=external --platform=node --sourcemap --watch",
 		"dev:run": "moleculer-runner --repl --hot dist/services/**/*.service.js",
-		"build": "esbuild index=./src --bundle --minify --outdir=dist --packages=external --platform=node",
+		"build": "esbuild ./src/**/* --bundle --minify --outdir=dist --packages=external --platform=node",
 		"start": "moleculer-runner dist"
 	},
 	"dependencies": {
